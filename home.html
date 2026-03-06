@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Github Issue Tracker</title>
+
+    <!-- Tailwind and daisy -->
+     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- font geist -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+
+
+    <!-- font awsome  -->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+</head>
+<body class="bg-[#F8FAFC] h-[100vh]">
+    <header class="">
+            <div class="navbar bg-base-100 shadow-sm px-8 flex justify-between">
+            <div class="flex justify-between">
+                <img class="max-w-10" src="assets/github-logo.png" alt="">
+                <a class="btn btn-ghost text-xl">Github Issue Tracker</a>
+            </div>
+            <div class="flex gap-2">
+                <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
+                <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> New Issue</button>
+            </div>
+            </div>
+    </header>
+    <section class="max-w-[80%] mx-auto">
+        <div class="rounded-sm px-10 py-5 mt-5 border-1 border-gray-200 bg-white">
+            <button onclick="toggle('all')" id="all" class="w-24 btn btn-primary ml-3">All</button>
+            <button onclick="toggle('open')" id="open" class="w-24 btn ml-3">Open</button>
+            <button onclick="toggle('closed')" id="closed" class="w-24 btn ml-3">Closed</button>
+           
+        </div>
+
+        <div class="bg-base-200 h-full rounded-sm border-1 border-gray-200 mt-10">
+            <div class="bg-white flex rounded-sm px-10 py-5 items-center justify-between">
+               <div class="flex ">
+                <div class="bg-purple-100 p-1 rounded-full">
+                 <img class="w-10 h-full" src="assets/Aperture.png" alt="">
+               </div>
+                <div class="ml-2">
+                    <p class="text-black font-bold text-xl">50 Issue</p>
+                    <p class="text-sm text-gray-500">Track and manage your project issues</p>
+                </div>
+               </div>
+                <div class="flex gap-3">
+                <div class="flex gap-1">
+
+                <img src="assets/Open-Status.png" alt="">
+                <p class="font-semibold">Open</p>
+            </div>
+                <div class="flex gap-1">
+
+                <img src="assets/Closed- Status .png" alt="">
+                <p class="font-semibold">Closed</p>
+            </div>
+            </div>
+            </div>   
+                
+            
+            <div id="cardsContainer" class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 p-5 gap-3 flex-wrap">
+                
+
+        </div>
+    </section>
+    <script src="javaScript/home.js"></script>
+</body>
+</html>
