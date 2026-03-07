@@ -6,12 +6,37 @@ window.onload = function() {
     }
 };
 
+const tag =(arr)=>{
+   const element = arr.map(el =>
+        `<span class="${el === 'bug' ? 'bg-red-100 text-red-600' : `${el === 'enhancement' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600'}`} rounded-full px-2 py-1 text-center font-semibold text-[12px] uppercase flex gap-1">${el === 'bug' ? '<img src="assets/BugDroid.svg">' : `${el === 'enhancement' ? '<img src="assets/Sparkle.svg">' : '<img src="assets/Lifebuoy.svg">'}` }
+            ${el}
+        </span>`
+    )
+    return(element.join(" "))
+}
+
+const spinner =(status)=>{
+    if (status == true){
+    document.getElementById("spinner").classList.remove("hidden");
+     const parent = document.getElementById("cardsContainer")
+     parent.innerHTML="";
+     const count = document.getElementById("count")
+    count.innerText = "Loading";
+
+    }
+    else {
+        document.getElementById("spinner").classList.add("hidden")
+    }
+}
+
 let active = "all"
 const loadAllIssue = ()=>{
     const allIssueUrl = "https://phi-lab-server.vercel.app/api/v1/lab/issues"
     fetch(allIssueUrl)
     .then (res => res.json())
     .then (data => showIssues(data.data));
+
+    spinner(true);
     
 }
 const loadOpenIssue = ()=>{
@@ -19,6 +44,7 @@ const loadOpenIssue = ()=>{
     fetch(allIssueUrl)
     .then (res => res.json())
     .then (data => showOpenIssues(data.data.filter(issue => issue.status === 'open')));
+    spinner(true);
     
 }
 const loadClosedIssue = ()=>{
@@ -26,6 +52,7 @@ const loadClosedIssue = ()=>{
     fetch(allIssueUrl)
     .then (res => res.json())
     .then (data => showClosedIssues(data.data.filter(issue => issue.status === 'closed')));
+    spinner(true);
     
 }
 
@@ -73,7 +100,7 @@ const search =()=>{
                     <hr class="mt-3 ">
                     <div class="mt-3">
                         <p class="text-sm text-gray-500">${issue.author}</p>
-                    <p class="text-sm text-gray-400">${issue.updatedAt}</p>
+                    <p class="text-sm text-gray-400">${issue.createdAt}</p>
                     </div>
                     </div>
                 </div>
@@ -83,6 +110,7 @@ const search =()=>{
             
         `
         parent.append(newDiv)
+        spinner(false);
     })
 }
 }
@@ -131,7 +159,7 @@ const showOpenIssues = (issues) => {
                     <hr class="mt-3 ">
                     <div class="mt-3">
                         <p class="text-sm text-gray-500">${issue.author}</p>
-                    <p class="text-sm text-gray-400">${issue.updatedAt}</p>
+                    <p class="text-sm text-gray-400">${issue.createdAt}</p>
                     </div>
                     </div>
                 </div>
@@ -141,6 +169,7 @@ const showOpenIssues = (issues) => {
             
         `
         parent.append(newDiv)
+        spinner(false);
     })
 }
 const showClosedIssues = (issues) => {
@@ -181,7 +210,7 @@ const showClosedIssues = (issues) => {
                     <hr class="mt-3 ">
                     <div class="mt-3">
                         <p class="text-sm text-gray-500">${issue.author}</p>
-                    <p class="text-sm text-gray-400">${issue.updatedAt}</p>
+                    <p class="text-sm text-gray-400">${issue.createdAt}</p>
                     </div>
                     </div>
                 </div>
@@ -190,6 +219,7 @@ const showClosedIssues = (issues) => {
             
         `
         parent.append(newDiv)
+        spinner(false);
     })
 }
 const showIssues = (issues) => {
@@ -228,7 +258,7 @@ const showIssues = (issues) => {
                     <hr class="mt-3 ">
                     <div class="mt-3">
                         <p class="text-sm text-gray-500">${issue.author}</p>
-                    <p class="text-sm text-gray-400">${issue.updatedAt}</p>
+                    <p class="text-sm text-gray-400">${issue.createdAt}</p>
                     </div>
                     </div>
                 </div>
@@ -237,6 +267,7 @@ const showIssues = (issues) => {
             
         `
         parent.append(newDiv)
+        spinner(false);
     })
 }
 
@@ -275,13 +306,8 @@ const toggle = (id) => {
 loadAllIssue()
 
 
-const tag =(arr)=>{
-   const element = arr.map(el =>
-        `<span class="${el === 'bug' ? 'bg-red-100 text-red-600' : `${el === 'enhancement' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600'}`} rounded-full px-2 py-1 text-center font-semibold text-[12px] uppercase flex gap-1">${el === 'bug' ? '<img src="assets/BugDroid.svg">' : `${el === 'enhancement' ? '<img src="assets/Sparkle.svg">' : '<img src="assets/Lifebuoy.svg">'}` }
-            ${el}
-        </span>`
-    )
-    return(element.join(" "))
-}
+
+
+
 
 // {id: 7, title: 'Improve search functionality', description: 'Add filters for advanced search including date ranges, status, and tags.', status: 'open', labels: Array(2), …}
