@@ -9,3 +9,10 @@ document.getElementById("signin-btn").addEventListener("click", () => {
         alert("Wrong credentials");
     }
 });
+window.onload = function() {
+    const login = localStorage.getItem("isLoggedIn");
+
+    if (login === "true") {
+        window.location.href = "../home.html";
+    }
+};
