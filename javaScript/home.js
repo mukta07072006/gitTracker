@@ -1,3 +1,11 @@
+window.onload = function() {
+    const login = localStorage.getItem("isLoggedIn");
+
+    if (login !== "true") {
+        window.location.href = "../index.html";
+    }
+};
+
 let active = "all"
 const loadAllIssue = ()=>{
     const allIssueUrl = "https://phi-lab-server.vercel.app/api/v1/lab/issues"
