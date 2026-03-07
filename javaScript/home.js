@@ -269,7 +269,9 @@ loadAllIssue()
 
 const tag =(arr)=>{
    const element = arr.map(el =>
-        `<span class="bg-red-100 text-red-600 rounded-full px-2 py-1 text-center font-semibold text-[12px]">${el}</span>`
+        `<span class="${el === 'bug' ? 'bg-red-100 text-red-600' : `${el === 'enhancement' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600'}`} rounded-full px-2 py-1 text-center font-semibold text-[12px] uppercase flex gap-1">${el === 'bug' ? '<img src="assets/BugDroid.svg">' : `${el === 'enhancement' ? '<img src="assets/Sparkle.svg">' : '<img src="assets/Lifebuoy.svg">'}` }
+            ${el}
+        </span>`
     )
     return(element.join(" "))
 }
