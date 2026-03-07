@@ -251,7 +251,7 @@ const toggle = (id) => {
     else if (id === "open"){
         allBtn.classList.remove("btn-primary")
         openBtn.classList.add("btn-primary")
-        allBtn.classList.remove("btn-primary")
+        closedBtn.classList.remove("btn-primary")
         loadOpenIssue()
         
     }
