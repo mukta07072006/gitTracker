@@ -8,7 +8,7 @@ window.onload = function() {
 
 const tag =(arr)=>{
    const element = arr.map(el =>
-        `<span class="${el === 'bug' ? 'bg-red-100 text-red-600' : `${el === 'enhancement' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600'}`} rounded-full px-2 py-1 text-center font-semibold text-[12px] uppercase flex gap-1">${el === 'bug' ? '<img src="assets/BugDroid.svg">' : `${el === 'enhancement' ? '<img src="assets/Sparkle.svg">' : '<img src="assets/Lifebuoy.svg">'}` }
+        `<span class="${el === 'bug' ? 'bg-red-100 text-red-600' : `${el === 'enhancement' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600'}`} rounded-full px-2 py-1 text-center font-semibold text-[12px] max-w-fit uppercase flex gap-1">${el === 'bug' ? '<img src="assets/BugDroid.svg">' : `${el === 'enhancement' ? '<img src="assets/Sparkle.svg">' : '<img src="assets/Lifebuoy.svg">'}` }
             ${el}
         </span>`
     )
@@ -73,7 +73,7 @@ const search =()=>{
     issues.forEach(issue => {
         const newDiv = document.createElement("div")
         newDiv.innerHTML =`
-         <div class="bg-white rounded-sm border-1 ${issue.status === 'open' ? `border-green-500` : `border-purple-500`}  border-t-4 px-5 py-3 h-full flex flex-col justify-between ">
+         <div onclick="loadModal(${issue.id})" class="bg-white rounded-sm border-1 ${issue.status === 'open' ? `border-green-500` : `border-purple-500`}  border-t-4 px-5 py-3 h-full flex flex-col justify-between ">
                     <div class="flex justify-between items-center">
                         <div>
                         ${issue.status === 'open' 
@@ -99,7 +99,7 @@ const search =()=>{
                     <div>
                     <hr class="mt-3 ">
                     <div class="mt-3">
-                        <p class="text-sm text-gray-500">${issue.author}</p>
+                        <p class="text-sm text-gray-500">${issue.author.split("_").join(" ")}</p>
                     <p class="text-sm text-gray-400">${issue.createdAt}</p>
                     </div>
                     </div>
@@ -132,7 +132,7 @@ const showOpenIssues = (issues) => {
     issues.forEach(issue => {
         const newDiv = document.createElement("div")
         newDiv.innerHTML =`
-        <div class="bg-white rounded-sm border-1 ${issue.status === 'open' ? `border-green-500` : `border-purple-500`}  border-t-4 px-5 py-3 h-full flex flex-col justify-between ">
+        <div onclick="loadModal(${issue.id})" class="bg-white rounded-sm border-1 ${issue.status === 'open' ? `border-green-500` : `border-purple-500`}  border-t-4 px-5 py-3 h-full flex flex-col justify-between ">
                     <div class="flex justify-between items-center">
                         <div>
                         ${issue.status === 'open' 
@@ -158,7 +158,7 @@ const showOpenIssues = (issues) => {
                     <div>
                     <hr class="mt-3 ">
                     <div class="mt-3">
-                        <p class="text-sm text-gray-500">${issue.author}</p>
+                        <p class="text-sm text-gray-500">${issue.author.split("_").join(" ")}</p>
                     <p class="text-sm text-gray-400">${issue.createdAt}</p>
                     </div>
                     </div>
@@ -183,7 +183,7 @@ const showClosedIssues = (issues) => {
     issues.forEach(issue => {
         const newDiv = document.createElement("div")
         newDiv.innerHTML =`
-        <div class="bg-white rounded-sm border-1 ${issue.status === 'open' ? `border-green-500` : `border-purple-500`}  border-t-4 px-5 py-3 h-full flex flex-col justify-between ">
+        <div onclick="loadModal(${issue.id})" class="bg-white rounded-sm border-1 ${issue.status === 'open' ? `border-green-500` : `border-purple-500`}  border-t-4 px-5 py-3 h-full flex flex-col justify-between ">
                     <div class="flex justify-between items-center">
                         <div>
                         ${issue.status === 'open' 
@@ -209,7 +209,7 @@ const showClosedIssues = (issues) => {
                     <div>
                     <hr class="mt-3 ">
                     <div class="mt-3">
-                        <p class="text-sm text-gray-500">${issue.author}</p>
+                        <p class="text-sm text-gray-500">${issue.author.split("_").join(" ")}</p>
                     <p class="text-sm text-gray-400">${issue.createdAt}</p>
                     </div>
                     </div>
@@ -231,7 +231,7 @@ const showIssues = (issues) => {
     issues.forEach(issue => {
         const newDiv = document.createElement("div")
         newDiv.innerHTML =`
-         <div class="bg-white rounded-sm border-1 ${issue.status === 'open' ? `border-green-500` : `border-purple-500`}  border-t-4 px-5 py-3 h-full flex flex-col justify-between ">
+         <div onclick="loadModal(${issue.id})" class="bg-white rounded-sm border-1 ${issue.status === 'open' ? `border-green-500` : `border-purple-500`}  border-t-4 px-5 py-3 h-full flex flex-col justify-between ">
                     <div class="flex justify-between items-center">
                         <div>
                         ${issue.status === 'open' 
@@ -257,7 +257,7 @@ const showIssues = (issues) => {
                     <div>
                     <hr class="mt-3 ">
                     <div class="mt-3">
-                        <p class="text-sm text-gray-500">${issue.author}</p>
+                        <p class="text-sm text-gray-500">${issue.author.split("_").join(" ")}</p>
                     <p class="text-sm text-gray-400">${issue.createdAt}</p>
                     </div>
                     </div>
@@ -308,6 +308,47 @@ loadAllIssue()
 
 
 
+const loadModal = (id) =>{
+    const url =`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`
+    fetch(url)
+    .then(res=>res.json())
+    .then(data=>displayModal(data.data))
+}
 
+const displayModal =(data)=>{
+    
+    const modal = document.getElementById("modal-card");
+    const parent = document.getElementById("modal-box");
+    parent.innerHTML= ''
+    const newDiv = document.createElement("div");
+    newDiv.innerHTML=`
+    <h2 class="text-2xl font-bold">${data.title}</h2>
+        <div class="flex items-center mt-4 gap-2">
+            <div class="flex justify-center items-center px-[6px] py-[1px] text-[14px] ${data.status === "open"? `bg-green-600` : `bg-purple-600` }  text-white rounded-full">${data.status}</div>
+            <p class="text-[12px] text-gray-600">Opened By ${data.author.split("_").join(" ")} . ${data.createdAt}</p>
+        </div>
+        <div class="grid grid-col-2 gap-2 mt-5">
+            ${tag(data.labels)}
+
+        </div>
+        <p class="text-[16px] text-gray-600 mt-4">${data.description}</p>
+        <div class="bg-gray-100 py-2 px-5 mt-5 rounded-xl flex gap-30">
+            <div>
+                <p class="text-[16px] text-gray-600">Assignee:</p>
+                <p class="text-[14px] text-black font-bold">${data.assignee.split("_").join(" ")}</p>
+            </div>
+            <div>
+                <p class="text-[16px] text-gray-600">Priority:</p>
+                <div class="flex justify-center items-center px-[6px] py-[1px] text-[14px] ${data.priority === 'high' ? `bg-red-600 text-white` : `${data.priority === 'medium' ?
+                            `text-yellow-100 bg-yellow-600` : `text-gray-100 bg-gray-600`
+                        }` } bg-green-600 text-white rounded-full max-w-fit">${data.priority}</div>
+            </div>
+        </div>
+    `
+
+    parent.append(newDiv);
+    modal.showModal();
+
+}
 
 // {id: 7, title: 'Improve search functionality', description: 'Add filters for advanced search including date ranges, status, and tags.', status: 'open', labels: Array(2), …}

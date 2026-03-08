@@ -70,12 +70,29 @@
                   <span class="loading loading-spinner text-success text-3xl text-center mx-auto"></span>
             </div>
                 
-          
+          <button class="btn" onclick="my_modal_5.showModal()">open modal</button>
             <div id="cardsContainer" class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 p-5 gap-3 flex-wrap">
                 
 
         </div>
     </section>
+
+    <!-- Open the modal using ID.showModal() method -->
+
+<dialog id="modal-card" class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box">
+    <div id="modal-box">
+        
+    </div>
+
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn btn-primary">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
     <script src="javaScript/home.js"></script>
 </body>
 </html>
